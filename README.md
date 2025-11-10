@@ -12,9 +12,9 @@ Người dùng có thể:
 
 - Chọn **mã cổ phiếu** và **năm** cần phân tích.
 - Xem **bảng dữ liệu thô** (CĐKT, KQKD, LCTT).
-- Xem **bảng chỉ số tài chính** đã tính sẵn (Indicators.csv).
+- Xem **bảng chỉ số tài chính**.
 - Xem **hệ thống biểu đồ** trực quan hóa cấu trúc tài sản, nguồn vốn, tăng trưởng, sinh lời, đòn bẩy & thanh khoản.
-- Nhận **các cảnh báo rủi ro/giao dịch bất thường** từ mô hình risk engine ở backend.
+- Nhận **các cảnh báo rủi ro/giao dịch bất thường** từ mô hình Randome Forest.
 
 Dự án được thiết kế như một mô hình mini cho:
 
