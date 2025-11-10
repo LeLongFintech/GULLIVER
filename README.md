@@ -132,30 +132,56 @@ Ví dụ (có thể điều chỉnh theo project thực tế):
     │  │  ├─ main.py          # Khởi tạo FastAPI app, định nghĩa API
     │  │  ├─ analyzer.py      # Xử lý, load và merge dữ liệu tài chính
     │  │  ├─ risk_engine.py   # Logic mô hình risk & cảnh báo
-    │  │  ├─ core/
-    │  │  │  └─ config.py     # Cấu hình (path data, ENV, v.v.)
-    │  │  └─ ...              # Các module hỗ trợ
-    │  ├─ data/
-    │  │  ├─ raw_data/        # File gốc: Excel/CSV
-    │  │  └─ preprocess_data/ # File đã xử lý, merge sẵn
-    │  └─ requirements.txt
-    │
-    ├─ frontend/ hoặc front_end/
+    │  │  ├─ __init__.py
+    |  ├─ src/
+    |  ├─ .env
+    |  ├─ requirements.txt
+    ├─ data/
+    │  ├─ code/ # Code dùng để xử lý dữ liệu    
+    │  │  ├─ average_indicators.ipynb
+    |  |  ├─ data_preporcess.ipynb
+    |  |  └─ indicators.ipynb
+    │  ├─ data_clean/ # Data đã được làm sạch
+    |  ├─ raw_data/ # Data gốc được lưu về
+    ├─ frontend/
     │  ├─ client/
     │  │  ├─ components/
+    |  |  |  ├─ common
+    |  |  |  |  ├─ index.ts
+    |  |  |  |  ├─ ThemeToggle.tsx
+    |  |  |  ├─ layout/
+    |  |  |  |  ├─ AppShell.tsx
+    |  |  |  |  ├─ TopBar.tsx
     │  │  │  ├─ pages/
-    │  │  │  │  ├─ Analysis.tsx   # Trang chính, chứa tabs
-    │  │  │  │  ├─ MetricsTab.tsx # Tab "Chỉ số"
-    │  │  │  │  └─ ChartsTab.tsx  # Tab "Biểu đồ"
+    |  |  |  |  ├─ analysis/
+    │  │  │  │  |  ├─ AlertsTab.tsx
+    │  │  │  │  |  ├─ MetricsTab.tsx 
+    │  │  │  │  |  ├─ ChartsTab.tsx
+    |  |  |  |  |  └─ AiTab.tsx
+    |  |  |  |  ├─ Analysis.tsx
+    |  |  |  |  └─ Home.tsx
     │  │  │  └─ ui/               # Các component UI tái sử dụng
-    │  │  ├─ main.tsx
-    │  │  └─ ...
+    │  │  ├─ contexts/
+    |  |  |  ├─ index.ts
+    |  |  |  └─ ThemeContext.tsx
+    |  |  ├─ hooks/
+    |  |  ├─ lib/
+    |  |  ├─ pages/
+    |  |  |  ├─ Index.tsx
+    |  |  |  └─ NouFound.tsx
+    |  |  ├─ App.tsx
+    |  |  ├─ App.tsx.new
+    |  |  ├─ global.css
+    │  │  └─ vite-env.d.ts
+    |  ├─ .builder/
+    |  ├─ netlify/
+    |  ├─ node_modules/
+    |  ├─ public/
+    |  ├─ sever
+    |  ├─ shared
     │  ├─ public/                 # Chứa các file CSV tĩnh (nếu FE đọc trực tiếp)
-    │  └─ vite.config.ts
-    │
-    └─ README.md
-
-> 💡 Tên folder frontend / front_end có thể khác nhau tùy cấu trúc hiện tại của bạn – hãy chỉnh lại cho khớp với repo thực tế.
+    │  ├─ vite.config.ts
+    |  └─ ...
 
 ---
 
@@ -169,7 +195,6 @@ Trước khi bắt đầu, hãy đảm bảo bạn đã cài:
 
 - Git  
   Dùng để clone project & quản lý version.  
-  Tải tại: https://git-scm.com
 
 - Python 3.10+ (khuyến nghị 3.10–3.12)  
   Dùng cho backend (FastAPI, xử lý dữ liệu).  
@@ -177,13 +202,12 @@ Trước khi bắt đầu, hãy đảm bảo bạn đã cài:
 
 - Node.js 18+  
   Dùng để chạy frontend (Vite + React + TypeScript).  
-  Tải tại: https://nodejs.org
 
 - pnpm (package manager cho frontend)  
   Sau khi cài Node.js xong, chạy:
-
-    npm install -g pnpm
-
+```
+npm install -g pnpm
+```
 - (Tuỳ chọn) Visual Studio Code  
   Editor để mở & chỉnh sửa code.
 
@@ -236,8 +260,6 @@ Mặc định, server chạy tại:
 ---
 
 ### 5.4. Cài đặt & chạy Frontend (React + Vite + TypeScript)
-
-Giả sử frontend nằm trong thư mục `frontend/` (nếu là `front_end/` thì thay lại cho đúng):
 
     cd MID_TERM_PROJECT/frontend
 
