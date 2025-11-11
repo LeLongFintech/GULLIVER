@@ -1,4 +1,4 @@
-# 📊 GULLIVER – Hệ thống phân tích báo cáo tài chính & cảnh báo rủi ro cổ phiếu tại thị trường Việt Nam
+# 📊 GULLIVER – Hệ thống phân tích dữ liệu tài chính & cảnh báo rủi ro cổ phiếu tại thị trường Việt Nam
 
 > Full-stack project: Backend (Python/FastAPI) + Frontend (React/Vite/TypeScript) + Data pipeline cho cổ phiếu Việt Nam.
 
