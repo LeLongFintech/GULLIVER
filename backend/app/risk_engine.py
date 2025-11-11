@@ -10,7 +10,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 
 # ======================
-# Config V2: RF (behavior-only)
+# Config V2: RF (behavior + extra features)
 # ======================
 PRICE_UNIT  = 1.0        # 1.0 nếu close đã là đơn vị chuẩn; đổi nếu dữ liệu là "nghìn VND"
 RANDOM_SEED = 42
@@ -21,15 +21,26 @@ SHARE_FILE = "Share_outstanding.csv"
 # Các feature đã dùng để tạo churn_flag (rule-based) → KHÔNG cho vào model
 RULE_FEATURES = ["ret_1d", "vol_z20", "gap_open"]
 
-# Feature hành vi dùng để train model (behavior-only)
+# Feature hành vi dùng để train model (behavior-only + extra features)
 BEHAVIOR_FEATURES = [
-    # bỏ ret_1d; giữ các return dài hơn
+    # return & price/volume structure (không dùng ret_1d, vol_z20, gap_open)
     "ret_3d", "ret_5d",
     "range_rel", "close_loc",
+
+    # rolling 3d / 5d / 10d
     "turnover_3d", "volz_3d", "range_3d", "close_loc_3d",
     "turnover_5d", "volz_5d", "range_5d", "close_loc_5d",
     "turnover_10d", "volz_10d", "range_10d", "close_loc_10d",
+
+    # cross-sectional ranking
     "turnover_pct", "mkt_cap_pct",
+
+    # ===== extra behavior features =====
+    "vol_change_5d",      # tốc độ thay đổi volume 5 ngày
+    "turnover_vol_ratio", # tỷ lệ turnover / |vol_z20|
+    "abs_ret_5d",         # biên độ giá tuyệt đối 5 ngày
+    "volatility_10d",     # độ biến động ret_1d trong 10 ngày
+    "price_slope_5d",     # slope giá 5 ngày gần nhất
 ]
 
 LABEL_COL = "churn_flag"
@@ -106,7 +117,7 @@ class RiskArtifacts:
 class ManipulationWatchV1:
     """
     V2: OHLCV + Shares theo năm → feature hành vi + cấu trúc →
-        RandomForest (supervised, behavior-only) → risk 0–10 theo ngày.
+        RandomForest (supervised, behavior + extra features) → risk 0–10 theo ngày.
     """
 
     def __init__(self, data_dir: str | None = None):
@@ -222,6 +233,31 @@ class ManipulationWatchV1:
                 lambda s_: s_.rolling(w, min_periods=max(2, w // 2)).mean()
             )
 
+        # ===== extra behavior features (giống notebook fine-tuned) =====
+        df = df.sort_values(["ticker", "date"]).reset_index(drop=True)
+        g2 = df.groupby("ticker", group_keys=False)
+
+        # Tốc độ thay đổi khối lượng trong 5 ngày
+        df["vol_change_5d"] = g2["volume"].transform(
+            lambda x: (x / x.shift(5)) - 1
+        )
+
+        # Tỷ lệ giữa thanh khoản và độ “bất thường” volume
+        df["turnover_vol_ratio"] = df["turnover"] / (df["vol_z20"].abs() + 1e-6)
+
+        # Biên độ giá tuyệt đối 5 ngày
+        df["abs_ret_5d"] = df["ret_5d"].abs()
+
+        # Độ biến động 10 ngày (rolling std của ret_1d)
+        df["volatility_10d"] = g2["ret_1d"].transform(
+            lambda x: x.rolling(10, min_periods=5).std()
+        )
+
+        # Xu hướng giá trong 5 ngày (price slope)
+        df["price_slope_5d"] = g2["close"].transform(
+            lambda x: (x - x.shift(5)) / 5
+        )
+
         # Rule gán nhãn churn_flag: KL đột biến nhưng biên độ hẹp
         df[LABEL_COL] = (
             (df["vol_z20"] > 2.0) & (df["range_rel"].abs() < 0.01)
@@ -266,10 +302,11 @@ class ManipulationWatchV1:
         X_train = train_df[BEHAVIOR_FEATURES]
         y_train = train_df[LABEL_COL].astype(int)
 
-        # ---------- Train RandomForest (behavior-only) ----------
+        # ---------- Train RandomForest (behavior + extra features) ----------
         rf = RandomForestClassifier(
             n_estimators=400,
             max_depth=None,
+            min_samples_leaf=3,            # như cấu hình fine-tuned trên notebook
             n_jobs=-1,
             random_state=RANDOM_SEED,
             class_weight="balanced_subsample",
