@@ -20,9 +20,8 @@ Dự án được thiết kế như một mô hình mini cho:
 
 - 🔍 Phân tích tài chính doanh nghiệp  
 - 📈 Trực quan hóa dữ liệu tài chính  
-- ⚠️ Phát hiện giao dịch bất thường / thao túng (risk & anomaly detection)  
-- 🎓 Bài tập lớn full-stack cho môn học & portfolio cá nhân.
-
+- ⚠️ Phát hiện giao dịch bất thường / thao túng (risk & anomaly detection)
+  
 ---
 
 ## 2. Tính năng chính / Main Features
@@ -95,7 +94,6 @@ Tập trung vào trực quan hóa insight theo từng trụ cột:
 - Uvicorn
 - pandas, numpy
 - scikit-learn (cho mô hình risk engine)
-- joblib (nếu cần lưu model)
 - Các thư viện xử lý CSV/Excel khác
 
 ### Frontend
