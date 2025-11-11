@@ -187,8 +187,6 @@ Ví dụ (có thể điều chỉnh theo project thực tế):
 
 ## 5. Cài đặt & chạy dự án / Getting Started
 
-> 🔧 Lưu ý: Nếu project của bạn đang dùng tên thư mục khác (front_end thay vì frontend), chỉ cần đổi lại đường dẫn cho đúng khi chạy lệnh.
-
 ### 5.1. Yêu cầu hệ thống / Prerequisites
 
 Trước khi bắt đầu, hãy đảm bảo bạn đã cài:
@@ -210,12 +208,11 @@ npm install -g pnpm
 ```
 - (Tuỳ chọn) Visual Studio Code  
   Editor để mở & chỉnh sửa code.
-
 ---
 
 ### 5.2. Clone project từ GitHub
 
-    git clone https://github.com/<your-username>/<your-repo-name>.git
+    git clone https://github.com/LeLongFintech/GULLIVER.git
     cd MID_TERM_PROJECT
 
 ---
