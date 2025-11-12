@@ -122,66 +122,168 @@ Tập trung vào trực quan hóa insight theo từng trụ cột:
 
 ## 4. Cấu trúc thư mục / Project Structure
 
-Ví dụ (có thể điều chỉnh theo project thực tế):
-
-    MID_TERM_PROJECT/
-    ├─ backend/
-    │  ├─ app/
-    │  │  ├─ main.py          # Khởi tạo FastAPI app, định nghĩa API
-    │  │  ├─ analyzer.py      # Xử lý, load và merge dữ liệu tài chính
-    │  │  ├─ risk_engine.py   # Logic mô hình risk & cảnh báo
-    │  │  ├─ __init__.py
-    |  ├─ src/
-    |  ├─ .env
-    |  ├─ requirements.txt
-    ├─ data/
-    │  ├─ code/ # Code dùng để xử lý dữ liệu    
-    │  │  ├─ average_indicators.ipynb
-    |  |  ├─ data_preporcess.ipynb
-    |  |  └─ indicators.ipynb
-    │  ├─ data_clean/ # Data đã được làm sạch
-    |  ├─ raw_data/ # Data gốc được lưu về
-    ├─ frontend/
-    │  ├─ client/
-    │  │  ├─ components/
-    |  |  |  ├─ common
-    |  |  |  |  ├─ index.ts
-    |  |  |  |  ├─ ThemeToggle.tsx
-    |  |  |  ├─ layout/
-    |  |  |  |  ├─ AppShell.tsx
-    |  |  |  |  ├─ TopBar.tsx
-    │  │  │  ├─ pages/
-    |  |  |  |  ├─ analysis/
-    │  │  │  │  |  ├─ AlertsTab.tsx
-    │  │  │  │  |  ├─ MetricsTab.tsx 
-    │  │  │  │  |  ├─ ChartsTab.tsx
-    |  |  |  |  |  └─ AiTab.tsx
-    |  |  |  |  ├─ Analysis.tsx
-    |  |  |  |  └─ Home.tsx
-    │  │  │  └─ ui/               # Các component UI tái sử dụng
-    │  │  ├─ contexts/
-    |  |  |  ├─ index.ts
-    |  |  |  └─ ThemeContext.tsx
-    |  |  ├─ hooks/
-    |  |  ├─ lib/
-    |  |  ├─ pages/
-    |  |  |  ├─ Index.tsx
-    |  |  |  └─ NouFound.tsx
-    |  |  ├─ App.tsx
-    |  |  ├─ App.tsx.new
-    |  |  ├─ global.css
-    │  │  └─ vite-env.d.ts
-    |  ├─ .builder/
-    |  ├─ netlify/
-    |  ├─ node_modules/
-    |  ├─ public/
-    |  ├─ sever
-    |  ├─ shared
-    │  ├─ public/                 # Chứa các file CSV tĩnh (nếu FE đọc trực tiếp)
-    │  ├─ vite.config.ts
-    |  └─ ...
-
----
+```
+├── 📁 backend
+│   ├── 📁 app
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 analyzer.py
+│   │   ├── 🐍 main.py
+│   │   └── 🐍 risk_engine.py
+│   ├── 📁 src
+│   └── 📄 requirements.txt
+├── 📁 data
+│   ├── 📁 code
+│   │   ├── 📄 average_indicators.ipynb
+│   │   ├── 📄 data_preprocess.ipynb
+│   │   └── 📄 indicators.ipynb
+│   ├── 📁 data_cleaned
+│   │   ├── 📄 Average_indicators.csv
+│   │   ├── 📄 Balance_sheet.csv
+│   │   ├── 📄 Cash_flow.csv
+│   │   ├── 📄 Income_statement.csv
+│   │   ├── 📄 Indicators.csv
+│   │   ├── 📄 OHLCV_Merge.csv
+│   │   ├── 📄 Share_outstanding.csv
+│   │   └── 📄 Stock_info.csv
+│   └── 📁 raw_data
+│       ├── 📄 05-11-2025.xlsx
+│       ├── 📄 Balance_sheet.xlsx
+│       ├── 📄 CafeF.HNX.Upto02.11.2025.csv
+│       ├── 📄 CafeF.HSX.Upto02.11.2025.csv
+│       ├── 📄 Cash_flow.xlsx
+│       ├── 📄 Data_Info_Vietnam (active).xlsx
+│       ├── 📄 Income_statement.xlsx
+│       ├── 📄 Monetary.xlsx
+│       └── 📄 info.xlsx
+├── 📁 frontend
+│   ├── 📁 .builder
+│   │   └── 📁 rules
+│   │       ├── 📄 deploy-app.mdc
+│   │       └── 📄 organize-ui.mdc
+│   ├── 📁 client
+│   │   ├── 📁 components
+│   │   │   ├── 📁 common
+│   │   │   │   ├── 📄 ThemeToggle.tsx
+│   │   │   │   └── 📄 index.ts
+│   │   │   ├── 📁 layout
+│   │   │   │   ├── 📄 AppShell.tsx
+│   │   │   │   └── 📄 TopBar.tsx
+│   │   │   ├── 📁 pages
+│   │   │   │   ├── 📁 analysis
+│   │   │   │   │   ├── 📄 AiTab.tsx
+│   │   │   │   │   ├── 📄 AlertsTab.tsx
+│   │   │   │   │   ├── 📄 ChartsTab.tsx
+│   │   │   │   │   └── 📄 MetricsTab.tsx
+│   │   │   │   ├── 📄 Analysis.tsx
+│   │   │   │   └── 📄 Home.tsx
+│   │   │   └── 📁 ui
+│   │   │       ├── 📄 accordion.tsx
+│   │   │       ├── 📄 alert-dialog.tsx
+│   │   │       ├── 📄 alert.tsx
+│   │   │       ├── 📄 aspect-ratio.tsx
+│   │   │       ├── 📄 avatar.tsx
+│   │   │       ├── 📄 badge.tsx
+│   │   │       ├── 📄 breadcrumb.tsx
+│   │   │       ├── 📄 button.tsx
+│   │   │       ├── 📄 calendar.tsx
+│   │   │       ├── 📄 card.tsx
+│   │   │       ├── 📄 carousel.tsx
+│   │   │       ├── 📄 chart.tsx
+│   │   │       ├── 📄 checkbox.tsx
+│   │   │       ├── 📄 collapsible.tsx
+│   │   │       ├── 📄 command.tsx
+│   │   │       ├── 📄 context-menu.tsx
+│   │   │       ├── 📄 dialog.tsx
+│   │   │       ├── 📄 drawer.tsx
+│   │   │       ├── 📄 dropdown-menu.tsx
+│   │   │       ├── 📄 form.tsx
+│   │   │       ├── 📄 hover-card.tsx
+│   │   │       ├── 📄 input-otp.tsx
+│   │   │       ├── 📄 input.tsx
+│   │   │       ├── 📄 label.tsx
+│   │   │       ├── 📄 menubar.tsx
+│   │   │       ├── 📄 navigation-menu.tsx
+│   │   │       ├── 📄 pagination.tsx
+│   │   │       ├── 📄 popover.tsx
+│   │   │       ├── 📄 progress.tsx
+│   │   │       ├── 📄 radio-group.tsx
+│   │   │       ├── 📄 resizable.tsx
+│   │   │       ├── 📄 scroll-area.tsx
+│   │   │       ├── 📄 select.tsx
+│   │   │       ├── 📄 separator.tsx
+│   │   │       ├── 📄 sheet.tsx
+│   │   │       ├── 📄 sidebar.tsx
+│   │   │       ├── 📄 skeleton.tsx
+│   │   │       ├── 📄 slider.tsx
+│   │   │       ├── 📄 sonner.tsx
+│   │   │       ├── 📄 switch.tsx
+│   │   │       ├── 📄 table.tsx
+│   │   │       ├── 📄 tabs.tsx
+│   │   │       ├── 📄 textarea.tsx
+│   │   │       ├── 📄 toast.tsx
+│   │   │       ├── 📄 toaster.tsx
+│   │   │       ├── 📄 toggle-group.tsx
+│   │   │       ├── 📄 toggle.tsx
+│   │   │       ├── 📄 tooltip.tsx
+│   │   │       └── 📄 use-toast.ts
+│   │   ├── 📁 contexts
+│   │   │   ├── 📄 ThemeContext.tsx
+│   │   │   └── 📄 index.ts
+│   │   ├── 📁 hooks
+│   │   │   ├── 📄 use-mobile.tsx
+│   │   │   └── 📄 use-toast.ts
+│   │   ├── 📁 lib
+│   │   │   ├── 📄 ratios.ts
+│   │   │   ├── 📄 utils.spec.ts
+│   │   │   └── 📄 utils.ts
+│   │   ├── 📁 pages
+│   │   │   ├── 📄 Index.tsx
+│   │   │   └── 📄 NotFound.tsx
+│   │   ├── 📄 App.tsx
+│   │   ├── 📄 App.tsx.new
+│   │   ├── 🎨 global.css
+│   │   └── 📄 vite-env.d.ts
+│   ├── 📁 netlify
+│   │   └── 📁 functions
+│   │       └── 📄 api.ts
+│   ├── 📁 public
+│   │   ├── 📄 Average_indicators.csv
+│   │   ├── 📄 Balance_sheet.csv
+│   │   ├── 📄 Cash_flow.csv
+│   │   ├── 📄 Income_statement.csv
+│   │   ├── 📄 Indicators.csv
+│   │   ├── 📄 OHLCV_Merge.csv
+│   │   ├── 📄 Share_outstanding.csv
+│   │   ├── 📄 Stock_info.csv
+│   │   ├── 📄 favicon.ico
+│   │   ├── 🖼️ placeholder.svg
+│   │   └── 📄 robots.txt
+│   ├── 📁 server
+│   │   ├── 📁 routes
+│   │   │   └── 📄 demo.ts
+│   │   ├── 📄 index.ts
+│   │   └── 📄 node-build.ts
+│   ├── 📁 shared
+│   │   └── 📄 api.ts
+│   ├── ⚙️ .dockerignore
+│   ├── ⚙️ .gitignore
+│   ├── ⚙️ .npmrc
+│   ├── ⚙️ .prettierrc
+│   ├── 📝 AGENTS.md
+│   ├── ⚙️ components.json
+│   ├── 🌐 index.html
+│   ├── ⚙️ netlify.toml
+│   ├── ⚙️ package.json
+│   ├── ⚙️ pnpm-lock.yaml
+│   ├── 📄 postcss.config.js
+│   ├── 📄 tailwind.config.ts
+│   ├── ⚙️ tsconfig.json
+│   ├── 📄 vite.config.server.ts
+│   └── 📄 vite.config.ts
+├── 📁 training_model
+│   └── 📄 machine_learning_model.ipynb
+└── 📝 README.md
+```
 
 ## 5. Cài đặt & chạy dự án / Getting Started
 
