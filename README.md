@@ -52,24 +52,9 @@ Dự án được thiết kế như một mô hình mini cho:
 Tập trung vào trực quan hóa insight theo từng trụ cột:
 
 1. **Cấu trúc nguồn vốn**  
-   - Biểu đồ cột chồng (Stacked Bar)  
-   - Trục X: Năm  
-   - Trục Y: Giá trị NỢ PHẢI TRẢ và VỐN CHỦ SỞ HỮU
-
 2. **Cấu trúc tài sản**  
-   - Biểu đồ miền xếp chồng (Stacked Area)  
-   - Trục X: Năm  
-   - Trục Y: TÀI SẢN NGẮN HẠN vs TÀI SẢN DÀI HẠN
-
 3. **Tăng trưởng & sinh lời**  
-   - Các biểu đồ thể hiện doanh thu, lợi nhuận, biên lợi nhuận qua năm  
-   - Giúp nhìn được xu hướng doanh nghiệp đang mở rộng hay suy giảm
-
 4. **Sức khỏe tài chính: “Đòn bẩy vs An toàn”**  
-   - Biểu đồ Cột + Đường với 2 trục Y:
-     - Y1 (Cột): Nợ / Vốn chủ sở hữu (DE) – **Rủi ro**  
-     - Y2 (Đường): Thanh khoản hiện hành – **An toàn**
-   - Mục tiêu: đặt **rủi ro** và **an toàn** đối nghịch trên cùng một biểu đồ để đánh giá sức khỏe tài chính.
 
 ### 2.4. Risk Engine & Cảnh báo giao dịch bất thường
 
